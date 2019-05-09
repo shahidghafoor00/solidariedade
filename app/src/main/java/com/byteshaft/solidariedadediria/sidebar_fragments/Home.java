@@ -8,18 +8,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.byteshaft.solidariedadediria.R;
 
 public class Home extends Fragment {
 
     private View mBaseView;
+    private Button mSendButton;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.menu_home));
         mBaseView = inflater.inflate(R.layout.fragment_home, container, false);
+        mSendButton = mBaseView.findViewById(R.id.button_send);
+        mSendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Tap");
+            }
+        });
+
+
         return mBaseView;
     }
 }

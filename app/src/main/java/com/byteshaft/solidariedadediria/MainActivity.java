@@ -1,5 +1,10 @@
 package com.byteshaft.solidariedadediria;
 
+import android.app.KeyguardManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -25,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registerBroadcastReceiver();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -40,37 +46,36 @@ public class MainActivity extends AppCompatActivity
         loadFragment(new Home());
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+    private void registerBroadcastReceiver() {
+        final IntentFilter theFilter = new IntentFilter();
+        theFilter.addAction(Intent.ACTION_SCREEN_ON);
+        theFilter.addAction(Intent.ACTION_SCREEN_OFF);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        BroadcastReceiver screenOnOffReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String strAction = intent.getAction();
 
-        //noinspection SimplifiableIfStatement
+                KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
 
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
+                if (strAction.equals(Intent.ACTION_SCREEN_OFF) || strAction.equals(Intent.ACTION_SCREEN_ON)) {
+                    if (myKM.inKeyguardRestrictedInputMode()) {
+                        System.out.println("Screen off " + "LOCKED");
+                        if (AdActivity.getInstance() == null) {
+                            startActivity(new Intent(MainActivity.this, AdActivity.class));
+                        }
+                    } else {
+                        if (AdActivity.getInstance() == null) {
+                            System.out.println("Screen off " + "UNLOCKED");
+//                            startActivity(new Intent(MainActivity.this, AdActivity.class));
+                        }
+                    }
+                }
+            }
+        };
 
-        return super.onOptionsItemSelected(item);
+        getApplicationContext().registerReceiver(screenOnOffReceiver, theFilter);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -98,6 +103,16 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public void loadFragment(Fragment fragment) {
