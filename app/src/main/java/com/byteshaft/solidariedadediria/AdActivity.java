@@ -8,7 +8,6 @@ import android.widget.Button;
 
 public class AdActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button offerButton;
     private Button dismissButton;
 
     private static AdActivity sInstance;
@@ -27,9 +26,8 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         setContentView(R.layout.activity_ad);
 
-        offerButton = findViewById(R.id.button_offer);
+
         dismissButton = findViewById(R.id.button_dismiss);
-        offerButton.setOnClickListener(this);
         dismissButton.setOnClickListener(this);
 
     }
@@ -37,13 +35,8 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_offer:
-                System.out.println("Offer Button clicked");
-                break;
-            case R.id.button_dismiss:
-                finish();
-                break;
+        if (v.getId() == R.id.button_dismiss) {
+            finish();
         }
     }
 }

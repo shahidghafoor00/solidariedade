@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        registerBroadcastReceiver();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -46,6 +46,11 @@ public class MainActivity extends AppCompatActivity
         loadFragment(new Home());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerBroadcastReceiver();
+    }
 
     private void registerBroadcastReceiver() {
         final IntentFilter theFilter = new IntentFilter();
@@ -68,7 +73,7 @@ public class MainActivity extends AppCompatActivity
                     } else {
                         if (AdActivity.getInstance() == null) {
                             System.out.println("Screen off " + "UNLOCKED");
-//                            startActivity(new Intent(MainActivity.this, AdActivity.class));
+                            startActivity(new Intent(MainActivity.this, AdActivity.class));
                         }
                     }
                 }
