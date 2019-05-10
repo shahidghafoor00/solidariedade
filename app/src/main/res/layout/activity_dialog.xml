@@ -17,15 +17,26 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
+    <EditText
+        android:id="@+id/et_amount"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="Enter Amount" />
+
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/et_amount"
         android:layout_centerInParent="true"
         android:columnCount="2">
 
 
         <LinearLayout
+            android:id="@+id/institute_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -50,6 +61,7 @@
 
 
         <LinearLayout
+            android:id="@+id/institute_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -74,6 +86,7 @@
 
 
         <LinearLayout
+            android:id="@+id/institute_three"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -98,6 +111,7 @@
 
 
         <LinearLayout
+            android:id="@+id/institute_four"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

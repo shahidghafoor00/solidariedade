@@ -13,10 +13,14 @@ public interface UserDao {
     @Query("SELECT * FROM user")
     List<User> getAllUser();
 
+    @Query("SELECT * FROM user WHERE email LIKE :email AND " +
+            "password LIKE :password LIMIT 1")
+    User getUser(String email, String password);
 
     @Insert
     void insert(User... user);
 
     @Update
     void update(User... user);
+
 }
