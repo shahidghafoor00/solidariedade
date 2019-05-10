@@ -3,6 +3,7 @@ package com.byteshaft.solidariedadediria;
 import android.app.KeyguardManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -18,11 +20,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import com.byteshaft.solidariedadediria.account.AccountManager;
 import com.byteshaft.solidariedadediria.sidebar_fragments.Home;
 import com.byteshaft.solidariedadediria.sidebar_fragments.Institution;
 import com.byteshaft.solidariedadediria.sidebar_fragments.Movements;
 import com.byteshaft.solidariedadediria.sidebar_fragments.Support;
 import com.byteshaft.solidariedadediria.sidebar_fragments.UserInfo;
+import com.byteshaft.solidariedadediria.utils.AppGlobals;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,7 +34,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (AccountManager.getInstance() != null) {
+            AccountManager.getInstance().finish();
+        }
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -103,6 +109,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_support) {
             loadFragment(new Support());
+        } else if (id == R.id.nav_logout) {
+            logOutDialog();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -124,5 +132,28 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         tx.replace(R.id.container, fragment);
         tx.commit();
+    }
+
+    private void logOutDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Confirmation!");
+        alertDialogBuilder.setMessage("Do you want to logout?")
+                .setCancelable(false).setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        AppGlobals.clearSettings();
+                        dialog.dismiss();
+                        startActivity(new Intent(getApplicationContext(), AccountManager.class));
+                        finish();
+                    }
+                });
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

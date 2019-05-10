@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.byteshaft.solidariedadediria.MainActivity;
 import com.byteshaft.solidariedadediria.R;
+import com.byteshaft.solidariedadediria.utils.AppGlobals;
 
 public class Login extends Fragment implements View.OnClickListener {
 
@@ -50,6 +51,7 @@ public class Login extends Fragment implements View.OnClickListener {
                 if (validate()) {
                     startActivity(new Intent(getActivity(), MainActivity.class));
                     AccountManager.getInstance().finish();
+                    AppGlobals.loginState(true);
                 }
                 break;
             case R.id.sign_up_text_view:
@@ -59,7 +61,7 @@ public class Login extends Fragment implements View.OnClickListener {
         }
     }
 
-    public boolean validate() {
+    private boolean validate() {
         boolean valid = true;
 
         mEmailString = mEmail.getText().toString();

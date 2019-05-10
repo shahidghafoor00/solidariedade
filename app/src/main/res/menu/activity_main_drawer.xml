@@ -19,10 +19,15 @@
     </group>
 
     <item android:title="@string/others">
+
         <menu>
             <item
                 android:id="@+id/nav_support"
                 android:title="@string/support" />
+
+            <item
+                android:id="@+id/nav_logout"
+                android:title="@string/logout" />
         </menu>
     </item>
 

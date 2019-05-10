@@ -15,6 +15,7 @@ import android.util.Log;
 import com.byteshaft.solidariedadediria.AdActivity;
 import com.byteshaft.solidariedadediria.MainActivity;
 import com.byteshaft.solidariedadediria.R;
+import com.byteshaft.solidariedadediria.utils.AppGlobals;
 
 public class AccountManager extends AppCompatActivity {
 
@@ -27,6 +28,9 @@ public class AccountManager extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (AppGlobals.isLogin()) {
+            startActivity(new Intent(this, MainActivity.class));
+        }
         setContentView(R.layout.activity_account_manager);
         sInstance = this;
         loadLoginFragment(new Login());
