@@ -61,10 +61,8 @@ public class Login extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.sign_up_text_view:
-//                getAllRecords();
                 AccountManager.getInstance().loadFragment(new Register());
                 break;
-
         }
     }
 
@@ -81,7 +79,7 @@ public class Login extends Fragment implements View.OnClickListener {
             mEmail.setError(null);
         }
         if (mPasswordString.isEmpty() || mPassword.length() < 4) {
-            mPassword.setError("Enter minimum 4 alphanumeric characters");
+            mPassword.setError("Enter minimum 4 characters");
             valid = false;
         } else {
             mPassword.setError(null);
@@ -89,24 +87,6 @@ public class Login extends Fragment implements View.OnClickListener {
         return valid;
     }
 
-    private void getAllRecords() {
-        class GetTasks extends AsyncTask<Void, Void, List<User>> {
-            @Override
-            protected List<User> doInBackground(Void... voids) {
-                List<User> detailList = DatabaseClient
-                        .getInstance(getContext())
-                        .getAppDatabase().userDao().getAllUser();
-                return detailList;
-            }
-
-            @Override
-            protected void onPostExecute(List<User> detailList) {
-                super.onPostExecute(detailList);
-            }
-        }
-        GetTasks gt = new GetTasks();
-        gt.execute();
-    }
 
 
     private void loginUser(final String email, final String password) {
@@ -124,8 +104,13 @@ public class Login extends Fragment implements View.OnClickListener {
             protected void onPostExecute(User user) {
                 super.onPostExecute(user);
                 if (user == null) {
-                    Toast.makeText(getContext(), "User Does Not Exist", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Invalid Password or Email", Toast.LENGTH_SHORT).show();
                 } else {
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_NAME, user.getUsername());
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_EMAIL, user.getEmail());
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_PASSWORD, user.getPassword());
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, user.getAmount());
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_ID, String.valueOf(user.getId()));
                     startActivity(new Intent(getActivity(), MainActivity.class));
                     AccountManager.getInstance().finish();
                     AppGlobals.loginState(true);

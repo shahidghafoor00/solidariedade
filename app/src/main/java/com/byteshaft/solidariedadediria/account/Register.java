@@ -53,6 +53,10 @@ public class Register extends Fragment implements View.OnClickListener {
             case R.id.button_register:
                 if (validate()) {
                     registerUser();
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_NAME, mNameString);
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_EMAIL, mEmailString);
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_PASSWORD, mPasswordString);
+
                 }
                 break;
         }
