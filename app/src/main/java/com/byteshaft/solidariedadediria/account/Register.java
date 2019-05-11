@@ -49,16 +49,14 @@ public class Register extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_register:
-                if (validate()) {
-                    registerUser();
-                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_NAME, mNameString);
-                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_EMAIL, mEmailString);
-                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_PASSWORD, mPasswordString);
-
-                }
-                break;
+        if (v.getId() == R.id.button_register) {
+            if (validate()) {
+                registerUser();
+                AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_NAME, mNameString);
+                AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_EMAIL, mEmailString);
+                AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_PASSWORD, mPasswordString);
+                AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, "10");
+            }
         }
     }
 
@@ -101,7 +99,7 @@ public class Register extends Fragment implements View.OnClickListener {
                 user.setUsername(mNameString);
                 user.setEmail(mEmailString);
                 user.setPassword(mPasswordString);
-
+                user.setAmount("10");
                 DatabaseClient.getInstance(getContext())
                         .getAppDatabase()
                         .userDao()

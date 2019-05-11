@@ -18,12 +18,8 @@ import android.widget.Toast;
 import com.byteshaft.solidariedadediria.MainActivity;
 import com.byteshaft.solidariedadediria.R;
 import com.byteshaft.solidariedadediria.database.DatabaseClient;
-import com.byteshaft.solidariedadediria.database.Movement;
 import com.byteshaft.solidariedadediria.database.User;
-import com.byteshaft.solidariedadediria.sidebar_fragments.Movements;
 import com.byteshaft.solidariedadediria.utils.AppGlobals;
-
-import java.util.List;
 
 public class Login extends Fragment implements View.OnClickListener {
 
@@ -86,7 +82,6 @@ public class Login extends Fragment implements View.OnClickListener {
         }
         return valid;
     }
-
 
 
     private void loginUser(final String email, final String password) {

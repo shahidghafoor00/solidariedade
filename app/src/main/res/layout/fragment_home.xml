@@ -23,10 +23,13 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tv_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="100 €"
+            android:layout_marginTop="20dp"
+            android:drawableRight="@drawable/euro_symbol"
+            android:drawablePadding="10dp"
+            android:text="10"
             android:textColor="@android:color/black"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -36,7 +39,7 @@
             android:id="@+id/button_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:text="Send Money" />
     </LinearLayout>
 

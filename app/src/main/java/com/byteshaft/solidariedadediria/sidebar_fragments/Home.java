@@ -10,14 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.byteshaft.solidariedadediria.DialogActivity;
 import com.byteshaft.solidariedadediria.R;
+import com.byteshaft.solidariedadediria.utils.AppGlobals;
 
 public class Home extends Fragment {
 
     private View mBaseView;
     private Button mSendButton;
+    private TextView mMoneyText;
 
     @Nullable
     @Override
@@ -25,6 +28,8 @@ public class Home extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.menu_home));
         mBaseView = inflater.inflate(R.layout.fragment_home, container, false);
         mSendButton = mBaseView.findViewById(R.id.button_send);
+        mMoneyText = mBaseView.findViewById(R.id.tv_money);
+        mMoneyText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_AMOUNT));
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
