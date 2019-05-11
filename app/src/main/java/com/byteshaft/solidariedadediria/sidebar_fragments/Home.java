@@ -29,7 +29,6 @@ public class Home extends Fragment {
         mBaseView = inflater.inflate(R.layout.fragment_home, container, false);
         mSendButton = mBaseView.findViewById(R.id.button_send);
         mMoneyText = mBaseView.findViewById(R.id.tv_money);
-        mMoneyText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_AMOUNT));
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,4 +38,12 @@ public class Home extends Fragment {
 
         return mBaseView;
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMoneyText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_AMOUNT));
+    }
+
 }

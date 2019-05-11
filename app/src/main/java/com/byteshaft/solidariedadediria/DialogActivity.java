@@ -25,6 +25,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
     private String mInstituteString = "";
     private String mAmountString;
     private int availableBalance = Integer.parseInt(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_AMOUNT));
+    private int newBalance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +95,6 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void sendMoney(final String name, final int money) {
-
         class SaveTask extends AsyncTask<Void, Void, Void> {
 
             @Override
@@ -102,12 +102,10 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                 Movement movement = new Movement();
                 movement.setInstituteName(name);
                 movement.setMoney(money);
-
                 DatabaseClient.getInstance(getApplicationContext())
                         .getAppDatabase()
                         .movementDao()
                         .insert(movement);
-
                 return null;
             }
 
@@ -118,7 +116,6 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                 finish();
             }
         }
-
         SaveTask saveTask = new SaveTask();
         saveTask.execute();
     }
@@ -130,6 +127,9 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                 mInstituteString = "Institute 1";
                 if (validate()) {
                     sendMoney(mInstituteString, Integer.parseInt(mAmountString));
+                    newBalance = availableBalance - Integer.parseInt(mAmountString);
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, String.valueOf(newBalance));
+                    System.out.println(newBalance);
                 }
                 break;
 
@@ -137,6 +137,9 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                 mInstituteString = "Institute 2";
                 if (validate()) {
                     sendMoney(mInstituteString, Integer.parseInt(mAmountString));
+                    newBalance = availableBalance - Integer.parseInt(mAmountString);
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, String.valueOf(newBalance));
+                    System.out.println(newBalance);
                 }
                 break;
 
@@ -144,6 +147,9 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                 mInstituteString = "Institute 3";
                 if (validate()) {
                     sendMoney(mInstituteString, Integer.parseInt(mAmountString));
+                    newBalance = availableBalance - Integer.parseInt(mAmountString);
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, String.valueOf(newBalance));
+                    System.out.println(newBalance);
                 }
                 break;
 
@@ -151,6 +157,9 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                 mInstituteString = "Institute 4";
                 if (validate()) {
                     sendMoney(mInstituteString, Integer.parseInt(mAmountString));
+                    newBalance = availableBalance - Integer.parseInt(mAmountString);
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, String.valueOf(newBalance));
+                    System.out.println(newBalance);
                 }
                 break;
         }
