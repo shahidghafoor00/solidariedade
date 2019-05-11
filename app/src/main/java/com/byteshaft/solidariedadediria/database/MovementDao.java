@@ -9,8 +9,8 @@ import java.util.List;
 @Dao
 public interface MovementDao {
 
-    @Query("SELECT * FROM Movement")
-    List<Movement> getAllMovements();
+    @Query("SELECT * FROM Movement WHERE user_id =:userId")
+    List<Movement> getAllMovements(int userId);
 
     @Insert
     void insert(Movement... movement);

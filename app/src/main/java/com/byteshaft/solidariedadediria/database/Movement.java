@@ -2,20 +2,28 @@ package com.byteshaft.solidariedadediria.database;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity
-public class Movement {
+@Entity(foreignKeys = @ForeignKey(entity = User.class,
+        parentColumns = "id",
+        childColumns = "user_id",
+        onDelete = ForeignKey.NO_ACTION))
 
+public class Movement {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     int id;
+
+    @ColumnInfo
+    int user_id;
 
     @ColumnInfo(name = "institute")
     String instituteName;
 
     @ColumnInfo(name = "money")
     int money;
+
 
     public int getId() {
         return id;
@@ -39,5 +47,13 @@ public class Movement {
 
     public void setMoney(int money) {
         this.money = money;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 }

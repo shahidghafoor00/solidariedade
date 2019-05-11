@@ -25,6 +25,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
     private String mInstituteString = "";
     private String mAmountString;
     private int availableBalance = Integer.parseInt(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_AMOUNT));
+    private String email = AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL);
     private int newBalance;
 
     @Override
@@ -102,6 +103,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                 Movement movement = new Movement();
                 movement.setInstituteName(name);
                 movement.setMoney(money);
+                movement.setUser_id(Integer.parseInt(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_ID)));
                 DatabaseClient.getInstance(getApplicationContext())
                         .getAppDatabase()
                         .movementDao()
@@ -129,6 +131,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                     sendMoney(mInstituteString, Integer.parseInt(mAmountString));
                     newBalance = availableBalance - Integer.parseInt(mAmountString);
                     AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, String.valueOf(newBalance));
+                    update(String.valueOf(newBalance), email);
                     System.out.println(newBalance);
                 }
                 break;
@@ -139,6 +142,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                     sendMoney(mInstituteString, Integer.parseInt(mAmountString));
                     newBalance = availableBalance - Integer.parseInt(mAmountString);
                     AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, String.valueOf(newBalance));
+                    update(String.valueOf(newBalance), email);
                     System.out.println(newBalance);
                 }
                 break;
@@ -149,6 +153,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                     sendMoney(mInstituteString, Integer.parseInt(mAmountString));
                     newBalance = availableBalance - Integer.parseInt(mAmountString);
                     AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, String.valueOf(newBalance));
+                    update(String.valueOf(newBalance), email);
                     System.out.println(newBalance);
                 }
                 break;
@@ -159,9 +164,31 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                     sendMoney(mInstituteString, Integer.parseInt(mAmountString));
                     newBalance = availableBalance - Integer.parseInt(mAmountString);
                     AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, String.valueOf(newBalance));
+                    update(String.valueOf(newBalance), email);
                     System.out.println(newBalance);
                 }
                 break;
         }
+    }
+
+    private void update(final String amount, final String email) {
+        class UpdateTask extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                DatabaseClient.getInstance(getApplication())
+                        .getAppDatabase()
+                        .userDao().updateAmount(amount, email);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_LONG).show();
+            }
+        }
+        UpdateTask ut = new UpdateTask();
+        ut.execute();
     }
 }

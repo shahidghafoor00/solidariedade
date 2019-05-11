@@ -8,9 +8,6 @@
             android:id="@+id/nav_home"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_institution"
-            android:title="@string/institution" />
-        <item
             android:id="@+id/nav_movements"
             android:title="@string/movements" />
         <item

@@ -16,11 +16,11 @@ import android.widget.TextView;
 import com.byteshaft.solidariedadediria.R;
 import com.byteshaft.solidariedadediria.database.DatabaseClient;
 import com.byteshaft.solidariedadediria.database.Movement;
+import com.byteshaft.solidariedadediria.utils.AppGlobals;
 
 import java.util.List;
 
 public class Movements extends Fragment {
-
 
     private View mBaseView;
     private RecyclerView recyclerView;
@@ -47,14 +47,13 @@ public class Movements extends Fragment {
                         .getInstance(getContext())
                         .getAppDatabase()
                         .movementDao()
-                        .getAllMovements();
+                        .getAllMovements(Integer.parseInt(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_ID)));
                 return detailList;
             }
 
             @Override
             protected void onPostExecute(List<Movement> detailList) {
                 super.onPostExecute(detailList);
-
                 adapter = new ListAdapter(detailList);
                 recyclerView.setAdapter(adapter);
                 System.out.println(detailList);

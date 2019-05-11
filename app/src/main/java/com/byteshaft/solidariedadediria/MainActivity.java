@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,8 +20,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.byteshaft.solidariedadediria.account.AccountManager;
+import com.byteshaft.solidariedadediria.database.DatabaseClient;
+import com.byteshaft.solidariedadediria.database.User;
 import com.byteshaft.solidariedadediria.sidebar_fragments.Home;
 import com.byteshaft.solidariedadediria.sidebar_fragments.Institution;
 import com.byteshaft.solidariedadediria.sidebar_fragments.Movements;
@@ -55,9 +59,40 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        saveUserDetails(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL), AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_PASSWORD));
+        System.out.println("user Id is: " +  AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_ID));
         registerBroadcastReceiver();
     }
 
+    private void saveUserDetails(final String email, final String password) {
+        class GetUser extends AsyncTask<Void, Void, User> {
+
+            @Override
+            protected User doInBackground(Void... voids) {
+                User user = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
+                        .userDao().getUser(email, password);
+                System.out.println(user);
+                return user;
+            }
+
+            @Override
+            protected void onPostExecute(User user) {
+                super.onPostExecute(user);
+                if (user == null) {
+                    Toast.makeText(getApplicationContext(), "Invalid Password or Email", Toast.LENGTH_SHORT).show();
+                } else {
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_NAME, user.getUsername());
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_EMAIL, user.getEmail());
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_PASSWORD, user.getPassword());
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, user.getAmount());
+                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_ID, String.valueOf(user.getId()));
+                }
+            }
+        }
+
+        GetUser getUser = new GetUser();
+        getUser.execute();
+    }
     private void registerBroadcastReceiver() {
         final IntentFilter theFilter = new IntentFilter();
         theFilter.addAction(Intent.ACTION_SCREEN_ON);
@@ -97,11 +132,13 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             loadFragment(new Home());
-            // Handle the camera action
-        } else if (id == R.id.nav_institution) {
-            loadFragment(new Institution());
 
-        } else if (id == R.id.nav_movements) {
+        }
+//        else if (id == R.id.nav_institution) {
+//            loadFragment(new Institution());
+//
+//        }
+        else if (id == R.id.nav_movements) {
             loadFragment(new Movements());
 
         } else if (id == R.id.nav_user_info) {
