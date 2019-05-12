@@ -52,23 +52,27 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.toString().isEmpty()) {
-                    if (availableBalance > Float.parseFloat(s.toString())) {
-                        amountEditText.setTextColor(Color.BLACK);
-                        System.out.println("pay");
-                        instituteOne.setClickable(true);
-                        instituteTwo.setClickable(true);
-                        instituteThree.setClickable(true);
-                        instituteFour.setClickable(true);
+                try {
+                    if (!s.toString().isEmpty()) {
+                        if (availableBalance > Float.parseFloat(s.toString())) {
+                            amountEditText.setTextColor(Color.BLACK);
+                            System.out.println("pay");
+                            instituteOne.setClickable(true);
+                            instituteTwo.setClickable(true);
+                            instituteThree.setClickable(true);
+                            instituteFour.setClickable(true);
 
-                    } else {
-                        amountEditText.setTextColor(Color.RED);
-                        amountEditText.setError("Not Enough Money");
-                        instituteOne.setClickable(false);
-                        instituteTwo.setClickable(false);
-                        instituteThree.setClickable(false);
-                        instituteFour.setClickable(false);
+                        } else {
+                            amountEditText.setTextColor(Color.RED);
+                            amountEditText.setError("Not Enough Money");
+                            instituteOne.setClickable(false);
+                            instituteTwo.setClickable(false);
+                            instituteThree.setClickable(false);
+                            instituteFour.setClickable(false);
+                        }
                     }
+                } catch (NumberFormatException e) {
+                    System.out.println("something went wrong");
                 }
             }
 

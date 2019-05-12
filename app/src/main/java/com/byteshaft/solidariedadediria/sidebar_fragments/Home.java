@@ -17,6 +17,9 @@ import com.byteshaft.solidariedadediria.DialogActivity;
 import com.byteshaft.solidariedadediria.R;
 import com.byteshaft.solidariedadediria.utils.AppGlobals;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class Home extends Fragment {
 
     private View mBaseView;
@@ -44,6 +47,9 @@ public class Home extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mMoneyText.setText(String.valueOf(AppGlobals.getMoneyFromSharedPreferences(AppGlobals.KEY_AMOUNT)));
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+        float money = AppGlobals.getMoneyFromSharedPreferences(AppGlobals.KEY_AMOUNT);
+        mMoneyText.setText(df.format(money));
     }
 }
