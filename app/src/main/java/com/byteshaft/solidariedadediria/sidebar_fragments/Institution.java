@@ -1,5 +1,6 @@
 package com.byteshaft.solidariedadediria.sidebar_fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.byteshaft.solidariedadediria.R;
+import com.byteshaft.solidariedadediria.institutions.InstituteFour;
+import com.byteshaft.solidariedadediria.institutions.InstituteOne;
+import com.byteshaft.solidariedadediria.institutions.InstituteThree;
+import com.byteshaft.solidariedadediria.institutions.InstituteTwo;
 
 public class Institution extends Fragment implements View.OnClickListener {
 
@@ -46,21 +51,19 @@ public class Institution extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.institute_one:
-                Toast.makeText(getContext(), "one", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), InstituteOne.class));
                 break;
-            case R.id.institute_two:
-                Toast.makeText(getContext(), "t", Toast.LENGTH_SHORT).show();
 
+            case R.id.institute_two:
+                startActivity(new Intent(getActivity(), InstituteTwo.class));
                 break;
 
             case R.id.institute_three:
-                Toast.makeText(getContext(), "ottttne", Toast.LENGTH_SHORT).show();
-
+                startActivity(new Intent(getActivity(), InstituteThree.class));
                 break;
 
             case R.id.institute_four:
-                Toast.makeText(getContext(), "gffff", Toast.LENGTH_SHORT).show();
-
+                startActivity(new Intent(getActivity(), InstituteFour.class));
                 break;
         }
     }

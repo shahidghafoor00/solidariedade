@@ -10,12 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".institutions.InstituteFour"></activity>
+        <activity android:name=".institutions.InstituteThree" />
+        <activity android:name=".institutions.InstituteTwo" />
+        <activity android:name=".institutions.InstituteOne" />
         <activity
             android:name=".DialogActivity"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.UserDialog" />
-
         <activity android:name=".account.AccountManager">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,17 +26,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".AdActivity"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
-
     </application>
 
 </manifest>
