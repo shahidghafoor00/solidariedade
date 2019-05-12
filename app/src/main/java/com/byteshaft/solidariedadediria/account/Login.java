@@ -104,7 +104,7 @@ public class Login extends Fragment implements View.OnClickListener {
                     AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_NAME, user.getUsername());
                     AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_EMAIL, user.getEmail());
                     AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_PASSWORD, user.getPassword());
-                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, user.getAmount());
+                    AppGlobals.saveMoneyToSharedPreferences(AppGlobals.KEY_AMOUNT, user.getAmount());
                     AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_ID, String.valueOf(user.getId()));
                     startActivity(new Intent(getActivity(), MainActivity.class));
                     AccountManager.getInstance().finish();

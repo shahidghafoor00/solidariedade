@@ -31,6 +31,7 @@ public class Register extends Fragment implements View.OnClickListener {
     private String mEmailString;
     private String mPasswordString;
     private String mNameString;
+    private float initialAmmount = 10.00f;
 
     @Nullable
     @Override
@@ -55,7 +56,7 @@ public class Register extends Fragment implements View.OnClickListener {
                 AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_NAME, mNameString);
                 AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_EMAIL, mEmailString);
                 AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_PASSWORD, mPasswordString);
-                AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, "10");
+                AppGlobals.saveMoneyToSharedPreferences(AppGlobals.KEY_AMOUNT, initialAmmount);
             }
         }
     }
@@ -99,7 +100,7 @@ public class Register extends Fragment implements View.OnClickListener {
                 user.setUsername(mNameString);
                 user.setEmail(mEmailString);
                 user.setPassword(mPasswordString);
-                user.setAmount("10");
+                user.setAmount(initialAmmount);
                 DatabaseClient.getInstance(getContext())
                         .getAppDatabase()
                         .userDao()

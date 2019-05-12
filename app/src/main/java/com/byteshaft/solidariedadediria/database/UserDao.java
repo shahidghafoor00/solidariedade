@@ -20,6 +20,6 @@ public interface UserDao {
 
 
     @Query("UPDATE user SET amount = :amount WHERE email =:email")
-    void updateAmount(String amount, String email);
+    void updateAmount(Float amount, String email);
 
 }

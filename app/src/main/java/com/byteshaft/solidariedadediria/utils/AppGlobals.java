@@ -51,9 +51,9 @@ public class AppGlobals extends Application {
         sharedPreferences.edit().putFloat(key, value).apply();
     }
 
-    public static int getMoneyFromSharedPreferences(String key) {
+    public static float getMoneyFromSharedPreferences(String key) {
         SharedPreferences sharedPreferences = getPreferenceManager();
-        return sharedPreferences.getInt(key, 0);
+        return sharedPreferences.getFloat(key, 0.0f);
     }
 
 

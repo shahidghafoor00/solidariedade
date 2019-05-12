@@ -23,8 +23,9 @@ public class User {
     public String password;
 
     @ColumnInfo(name = "amount")
+    public Float amount;
 
-    public String amount;
+
 
     public String getUsername() {
         return username;
@@ -50,11 +51,11 @@ public class User {
         this.password = password;
     }
 
-    public String getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
 

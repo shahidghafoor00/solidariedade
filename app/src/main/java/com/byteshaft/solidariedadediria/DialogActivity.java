@@ -21,12 +21,13 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
     private LinearLayout instituteTwo;
     private LinearLayout instituteThree;
     private LinearLayout instituteFour;
+
     private EditText amountEditText;
     private String mInstituteString = "";
     private String mAmountString;
-    private int availableBalance = Integer.parseInt(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_AMOUNT));
+    private float availableBalance = AppGlobals.getMoneyFromSharedPreferences(AppGlobals.KEY_AMOUNT);
     private String email = AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL);
-    private int newBalance;
+    private float newBalance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!s.toString().isEmpty()) {
-                    if (availableBalance >= Integer.parseInt(s.toString())) {
+                    if (availableBalance > Float.parseFloat(s.toString())) {
                         amountEditText.setTextColor(Color.BLACK);
                         System.out.println("pay");
                         instituteOne.setClickable(true);
@@ -63,7 +64,6 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                     } else {
                         amountEditText.setTextColor(Color.RED);
                         amountEditText.setError("Not Enough Money");
-                        System.out.println("not enough money");
                         instituteOne.setClickable(false);
                         instituteTwo.setClickable(false);
                         instituteThree.setClickable(false);
@@ -95,7 +95,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
         return valid;
     }
 
-    private void sendMoney(final String name, final int money) {
+    private void sendMoney(final String name, final float money) {
         class SaveTask extends AsyncTask<Void, Void, Void> {
 
             @Override
@@ -128,10 +128,10 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.institute_one:
                 mInstituteString = "Institute 1";
                 if (validate()) {
-                    sendMoney(mInstituteString, Integer.parseInt(mAmountString));
-                    newBalance = availableBalance - Integer.parseInt(mAmountString);
-                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, String.valueOf(newBalance));
-                    update(String.valueOf(newBalance), email);
+                    sendMoney(mInstituteString, Float.parseFloat(mAmountString));
+                    newBalance = availableBalance - Float.parseFloat(mAmountString);
+                    AppGlobals.saveMoneyToSharedPreferences(AppGlobals.KEY_AMOUNT, newBalance);
+                    update(newBalance, email);
                     System.out.println(newBalance);
                 }
                 break;
@@ -139,10 +139,10 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.institute_two:
                 mInstituteString = "Institute 2";
                 if (validate()) {
-                    sendMoney(mInstituteString, Integer.parseInt(mAmountString));
-                    newBalance = availableBalance - Integer.parseInt(mAmountString);
-                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, String.valueOf(newBalance));
-                    update(String.valueOf(newBalance), email);
+                    sendMoney(mInstituteString, Float.parseFloat(mAmountString));
+                    newBalance = availableBalance - Float.parseFloat(mAmountString);
+                    AppGlobals.saveMoneyToSharedPreferences(AppGlobals.KEY_AMOUNT, newBalance);
+                    update(newBalance, email);
                     System.out.println(newBalance);
                 }
                 break;
@@ -150,10 +150,10 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.institute_three:
                 mInstituteString = "Institute 3";
                 if (validate()) {
-                    sendMoney(mInstituteString, Integer.parseInt(mAmountString));
-                    newBalance = availableBalance - Integer.parseInt(mAmountString);
-                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, String.valueOf(newBalance));
-                    update(String.valueOf(newBalance), email);
+                    sendMoney(mInstituteString, Float.parseFloat(mAmountString));
+                    newBalance = availableBalance - Float.parseFloat(mAmountString);
+                    AppGlobals.saveMoneyToSharedPreferences(AppGlobals.KEY_AMOUNT, newBalance);
+                    update(newBalance, email);
                     System.out.println(newBalance);
                 }
                 break;
@@ -161,17 +161,17 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.institute_four:
                 mInstituteString = "Institute 4";
                 if (validate()) {
-                    sendMoney(mInstituteString, Integer.parseInt(mAmountString));
-                    newBalance = availableBalance - Integer.parseInt(mAmountString);
-                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, String.valueOf(newBalance));
-                    update(String.valueOf(newBalance), email);
+                    sendMoney(mInstituteString, Float.parseFloat(mAmountString));
+                    newBalance = availableBalance - Float.parseFloat(mAmountString);
+                    AppGlobals.saveMoneyToSharedPreferences(AppGlobals.KEY_AMOUNT, newBalance);
+                    update(newBalance, email);
                     System.out.println(newBalance);
                 }
                 break;
         }
     }
 
-    private void update(final String amount, final String email) {
+    private void update(final float amount, final String email) {
         class UpdateTask extends AsyncTask<Void, Void, Void> {
 
             @Override

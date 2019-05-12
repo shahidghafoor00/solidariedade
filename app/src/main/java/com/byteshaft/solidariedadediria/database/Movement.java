@@ -22,7 +22,7 @@ public class Movement {
     String instituteName;
 
     @ColumnInfo(name = "money")
-    int money;
+    Float money;
 
 
     public int getId() {
@@ -41,11 +41,11 @@ public class Movement {
         this.instituteName = instituteName;
     }
 
-    public int getMoney() {
+    public Float getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(Float money) {
         this.money = money;
     }
 

@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
                     AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_NAME, user.getUsername());
                     AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_EMAIL, user.getEmail());
                     AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_PASSWORD, user.getPassword());
-                    AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, user.getAmount());
+                    AppGlobals.saveMoneyToSharedPreferences(AppGlobals.KEY_AMOUNT, user.getAmount());
                     AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_ID, String.valueOf(user.getId()));
                 }
             }

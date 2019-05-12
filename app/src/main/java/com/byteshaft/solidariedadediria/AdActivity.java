@@ -20,9 +20,10 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
     private ImageView adImage;
 
     private static AdActivity sInstance;
-    private int availableBalance = Integer.parseInt(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_AMOUNT));
+    private float availableBalance = AppGlobals.getMoneyFromSharedPreferences(AppGlobals.KEY_AMOUNT);
     private String email = AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_EMAIL);
-    private int newBalance;
+    private float rewardedMoney = 0.10f;
+    private float newBalance;
 
     public static AdActivity getInstance() {
         return sInstance;
@@ -42,20 +43,21 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
         adImage.setOnClickListener(this);
         dismissButton.setOnClickListener(this);
 
+        /// adding and updating balance
+        newBalance = availableBalance + rewardedMoney;
+        update(newBalance, email);
     }
 
     @Override
     public void onClick(View v) {
-     switch (v.getId()) {
-         case R.id.button_dismiss:
-             finish();
-             break;
-         case R.id.ad_image:
-             openLink();
-             newBalance = availableBalance + 5;
-             update(String.valueOf(newBalance), email);
-             finish();
-     }
+        switch (v.getId()) {
+            case R.id.button_dismiss:
+                finish();
+                break;
+            case R.id.ad_image:
+                openLink();
+                finish();
+        }
     }
 
     private void openLink() {
@@ -64,7 +66,7 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
         startActivity(intent);
     }
 
-    private void update(final String amount, final String email) {
+    private void update(final float amount, final String email) {
         class UpdateTask extends AsyncTask<Void, Void, Void> {
 
             @Override
@@ -78,8 +80,8 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                Toast.makeText(getApplicationContext(), "You have earned 5€", Toast.LENGTH_LONG).show();
-                AppGlobals.saveStringToSharedPreferences(AppGlobals.KEY_AMOUNT, String.valueOf(newBalance));
+                Toast.makeText(getApplicationContext(), "You have earned " + rewardedMoney, Toast.LENGTH_LONG).show();
+                AppGlobals.saveMoneyToSharedPreferences(AppGlobals.KEY_AMOUNT, newBalance);
             }
         }
         UpdateTask ut = new UpdateTask();

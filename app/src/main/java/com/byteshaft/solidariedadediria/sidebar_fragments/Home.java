@@ -44,6 +44,6 @@ public class Home extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mMoneyText.setText(AppGlobals.getStringFromSharedPreferences(AppGlobals.KEY_AMOUNT));
+        mMoneyText.setText(String.valueOf(AppGlobals.getMoneyFromSharedPreferences(AppGlobals.KEY_AMOUNT)));
     }
 }
