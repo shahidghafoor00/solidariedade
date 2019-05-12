@@ -1,5 +1,7 @@
 package com.byteshaft.solidariedadediria;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,10 +51,17 @@ public class AdActivity extends AppCompatActivity implements View.OnClickListene
              finish();
              break;
          case R.id.ad_image:
+             openLink();
              newBalance = availableBalance + 5;
              update(String.valueOf(newBalance), email);
              finish();
      }
+    }
+
+    private void openLink() {
+        Uri uri = Uri.parse("http://www.google.com");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 
     private void update(final String amount, final String email) {

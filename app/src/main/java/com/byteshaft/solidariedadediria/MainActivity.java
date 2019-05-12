@@ -134,10 +134,10 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new Home());
 
         }
-//        else if (id == R.id.nav_institution) {
-//            loadFragment(new Institution());
-//
-//        }
+        else if (id == R.id.nav_institution) {
+            loadFragment(new Institution());
+
+        }
         else if (id == R.id.nav_movements) {
             loadFragment(new Movements());
 
