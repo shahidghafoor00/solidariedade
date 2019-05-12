@@ -46,6 +46,18 @@ public class AppGlobals extends Application {
     }
 
 
+    public static void saveMoneyToSharedPreferences(String key, float value) {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        sharedPreferences.edit().putFloat(key, value).apply();
+    }
+
+    public static int getMoneyFromSharedPreferences(String key) {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        return sharedPreferences.getInt(key, 0);
+    }
+
+
+
     public static void clearSettings() {
         SharedPreferences sharedPreferences = getPreferenceManager();
         sharedPreferences.edit().clear().commit();
